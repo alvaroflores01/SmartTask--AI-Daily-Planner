@@ -6,8 +6,8 @@ const TaskList = ({ title }) => {
   const { taskList } = useContext(UserContext);
   if (taskList !== null && taskList.length > 0) {
     return (
-      <div className="text-white overflow-hidden p-8 flex-grow">
-        <h1 className="mb-1">{title}</h1>
+      <div className="text-white overflow-hidden p-3 flex-grow">
+        <h1 className="text-center underline text-2xl">{title}</h1>
         <div className="overflow-scroll h-full">
           {taskList.map((task) => {
             return (

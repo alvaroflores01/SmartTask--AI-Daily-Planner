@@ -34,9 +34,9 @@ const LoginRegister = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-800 ">
-      {/* <TitleHeader /> */}
-      <div className="flex flex-col justify-center h-screen border-4">
+    <div className="flex flex-col h-screen bg-gray-800 border-4 ">
+      <TitleHeader />
+      <div className="flex flex-col justify-center h-screen ">
         <form
           action="#"
           className="w-80 mx-auto mb-12"
