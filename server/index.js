@@ -127,5 +127,9 @@ app.get('/userTasks',verifyToken, async (req, res) => {
         throw error.message;
     }
 });
+
+const PORT = process.env.PORT || 4000;
 //Express is listening on
-app.listen(4000);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server Started at Port ${PORT}`);
+});
