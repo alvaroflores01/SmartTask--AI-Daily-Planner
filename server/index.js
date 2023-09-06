@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
-
+const askAIPlanner = require('./api/openai')
 //Import Models
 const UserModel = require('./models/User');
 const TaskModel = require('./models/Task')
@@ -17,6 +17,11 @@ const app = express();
 
 //Config Development Environment
 dotenv.config();
+// const getSchedule = async (msg="'clean room, make coffee, pick up mom at 3, do math hw, read a book'") => {
+//     const plannedSchedule = await askAI(msg);
+//     return plannedSchedule;
+// }
+
 
 //DATABASE CONNECTION
 mongoose.connect(process.env.MONGO_URL);
@@ -32,7 +37,6 @@ app.use(express.json());
 app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL,
-    // origin: "https://smart-task-ai-front.vercel.app",
 }))
 //cookie-parser: allows us to read cookie
 app.use(cookieParser());

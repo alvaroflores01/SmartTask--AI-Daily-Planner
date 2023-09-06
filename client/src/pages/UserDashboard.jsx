@@ -6,6 +6,7 @@ import TaskList from "../components/TaskList";
 import AddTaskInput from "../components/AddTaskInput";
 import TitleHeader from "../components/TitleHeader";
 import LogoutBtn from "../components/LogoutBtn";
+import PlannerBtn from "../components/PlannerBtn";
 import axios from "axios";
 const UserDashboard = () => {
   //useContext variables
@@ -29,9 +30,11 @@ const UserDashboard = () => {
           </div>
           <TaskList title="Daily Tasks" />
           <div className="md:p-5 p-3">
+            <PlannerBtn />
             <AddTaskInput />
             {/* <LogoutBtn /> */}
           </div>
+
           <LogoutBtn />
         </div>
       </div>

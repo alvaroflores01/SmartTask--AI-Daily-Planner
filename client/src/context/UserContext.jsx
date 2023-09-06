@@ -13,15 +13,19 @@ export function UserContextProvider({ children }) {
     axios.get("/profile").then((res) => {
       setId(res.data.userId);
     });
-  });
+  }, []);
   useEffect(() => {
-    getUserTasks();
+    fetchTasks();
   }, [username, taskList]);
 
-  const getUserTasks = async () => {
+  const fetchTasks = async () => {
     if (username) {
       const { data } = await axios.get("/userTasks");
-      setTaskList(data);
+      console.log(data.length);
+      console.log(taskList.length);
+      if (data.length !== taskList.length) {
+        setTaskList(data);
+      }
     }
   };
   return (
