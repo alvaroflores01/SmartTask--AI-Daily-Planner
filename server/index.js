@@ -32,6 +32,7 @@ app.use(express.json());
 app.use(cors({
     credentials: true,
     origin: process.env.CLIENT_URL,
+    // origin: "https://smart-task-ai-front.vercel.app",
 }))
 //cookie-parser: allows us to read cookie
 app.use(cookieParser());
