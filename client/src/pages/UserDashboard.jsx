@@ -12,7 +12,7 @@ import GeneratedSchedule from "../components/GeneratedSchedule";
 
 const UserDashboard = () => {
   //useContext variables
-  const { setUsername, setId } = useContext(UserContext);
+  const { setUsername, setId, schedule } = useContext(UserContext);
   const logoutHandler = () => {
     //remove token and send back to main screen
     setUsername(null);
@@ -42,7 +42,11 @@ const UserDashboard = () => {
           <LogoutBtn />
         </div>
       </div>
-      <GeneratedSchedule />
+      {schedule ? (
+        <GeneratedSchedule schedule={schedule} />
+      ) : (
+        console.log("Not set")
+      )}
     </div>
   );
 };

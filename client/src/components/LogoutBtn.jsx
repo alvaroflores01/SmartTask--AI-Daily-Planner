@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 const LogoutBtn = () => {
   //useContext variables
-  const { setUsername, setId } = useContext(UserContext);
+  const { setUsername, setId, setSchedule } = useContext(UserContext);
   const logoutHandler = () => {
     //remove token and send back to main screen
+    setSchedule(null);
     setUsername(null);
   };
   return (

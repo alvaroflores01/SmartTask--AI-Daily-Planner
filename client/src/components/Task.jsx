@@ -1,5 +1,17 @@
 import axios from "axios";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+
 const Task = ({ task = "default-task", completed, taskId }) => {
+  // const { username, taskList, setTaskList } = useContext(UserContext);
+  // const fetchTasks = async () => {
+  //   if (username) {
+  //     const { data } = await axios.get("/userTasks");
+  //     if (data.length !== taskList.length) {
+  //       setTaskList(data);
+  //     }
+  //   }
+  // };
   const deleteHandler = () => {
     try {
       axios.delete(`/task/${taskId}`);
@@ -8,10 +20,11 @@ const Task = ({ task = "default-task", completed, taskId }) => {
       console.log(error.message);
     }
   };
-  const completedHandler = () => {
+  const completedHandler = async () => {
     try {
-      axios.put(`/task/${taskId}`, { completed: !completed });
-      console.log(`Compelted is now ${completed}`);
+      await axios.put(`/task/${taskId}`, { completed: !completed });
+      // fetchTasks();
+      // console.log(`Completed is now ${completed}`);
     } catch (error) {
       console.log(error.message);
     }

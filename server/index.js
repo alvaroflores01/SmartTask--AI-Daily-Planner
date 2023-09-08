@@ -17,13 +17,6 @@ const app = express();
 
 //Config Development Environment
 dotenv.config();
-// const getSchedule = async (msg="'clean room, make coffee, pick up mom at 3, do math hw, read a book'") => {
-//     const plannedSchedule = await askAI(msg);
-//     return plannedSchedule;
-// }
-
-//TEST 
-// askAIPlanner('clean room, do math hw, pick up mom at 3 (10 minute drive), make coffee, buy groceries')
 
 //DATABASE CONNECTION
 mongoose.connect(process.env.MONGO_URL);
@@ -134,6 +127,18 @@ app.get('/userTasks',verifyToken, async (req, res) => {
         throw error.message;
     }
 });
+
+app.patch('/planDay', verifyToken, async (req, res) => {
+    const userId = req.tokenData.userId;
+    const taskString = req.body.taskString;
+    try {
+        const taskList = await askAIPlanner(taskString)
+        res.json(taskList).status(204);
+    } catch (error) {
+        console.log(error.message);
+        throw error;
+    }
+})
 
 const PORT = process.env.PORT || 4000;
 //Express is listening on

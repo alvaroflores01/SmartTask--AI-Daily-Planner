@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema( {
     username: {type: String, unique: true},
     password: String,
-    salt: String
+    salt: String,
+    schedule: Array,
 }, {timestamps: true})
 
 //Assign the schema to the model
