@@ -22,6 +22,8 @@ dotenv.config();
 //     return plannedSchedule;
 // }
 
+//TEST 
+// askAIPlanner('clean room, do math hw, pick up mom at 3 (10 minute drive), make coffee, buy groceries')
 
 //DATABASE CONNECTION
 mongoose.connect(process.env.MONGO_URL);

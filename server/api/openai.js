@@ -21,7 +21,10 @@ async function askAI(msg) {
       });
     
       const result = JSON.parse(completion.choices[0].message.content)
-      return result.schedule;
+      console.log(result.schedule)
+      console.log(result.schedule[0])
+    //   console.log(result.schedule)
+    //   return result.schedule;
 }
 
 
