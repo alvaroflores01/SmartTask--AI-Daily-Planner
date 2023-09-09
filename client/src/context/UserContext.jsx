@@ -17,13 +17,11 @@ export function UserContextProvider({ children }) {
       fetchTasks();
     });
   }, []);
-  // useEffect(() => {
-  //   fetchTasks();
-  // }, [username, taskList]);
 
   const fetchTasks = async () => {
     if (username) {
       const { data } = await axios.get("/userTasks");
+      // setTaskList(data);
       if (data.length !== taskList.length) {
         setTaskList(data);
       }

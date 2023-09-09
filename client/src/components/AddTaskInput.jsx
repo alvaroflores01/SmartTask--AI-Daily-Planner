@@ -2,16 +2,19 @@ import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 function AddTaskInput() {
-  const [task, setTask] = useState();
-  const { id, setTaskList } = useContext(UserContext);
+  const [task, setTask] = useState("");
+  const { id, setTaskList, username } = useContext(UserContext);
   const addTask = async (e) => {
+    const fetchTasks = async () => {
+      if (username) {
+        const { data } = await axios.get("/userTasks");
+        setTaskList(data);
+        setTask("");
+      }
+    };
     e.preventDefault();
-    console.log("RUNNING addTASK");
-    axios.post("/task", { task, id });
-    const { data } = await axios.get("/userTasks");
-    console.log("data received");
-    setTaskList(data);
-    setTask("");
+    await axios.post("/task", { task, id });
+    fetchTasks();
   };
 
   return (

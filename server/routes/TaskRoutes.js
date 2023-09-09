@@ -7,7 +7,7 @@ router.post('/', async (req, res) => {
         const { task, id } = req.body;
         const newTask = await TaskModel.create({task_text:task, user_id: id})
         if (newTask) {
-            console.log("New Task Created");
+            res.status(200).send("Created Task Successfully");
         }        
         
     } catch (error) {

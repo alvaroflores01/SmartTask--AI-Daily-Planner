@@ -1,9 +1,23 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
+import axios from "axios";
 import Task from "./Task";
 
 const TaskList = ({ title }) => {
-  const { taskList } = useContext(UserContext);
+  //
+  const { taskList, username, setTaskList } = useContext(UserContext);
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = async () => {
+    if (username) {
+      const { data } = await axios.get("/userTasks");
+      setTaskList(data);
+    }
+  };
+
+  //
   if (taskList !== null && taskList.length > 0) {
     return (
       <div className="text-white overflow-hidden p-3 flex-grow">
