@@ -5,7 +5,6 @@ const UserMenu = () => {
   //useContext variables
   const { setUsername, setId } = useContext(UserContext);
   const logoutHandler = () => {
-    //remove token and send back to main screen
     setUsername(null);
   };
   return (
@@ -69,7 +68,6 @@ const UserMenu = () => {
           Upcoming
         </div>
       </div>
-      {/* ADD LOGOUT BUTTON */}
       <LogoutBtn />
     </div>
   );

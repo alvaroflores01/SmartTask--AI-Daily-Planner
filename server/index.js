@@ -63,7 +63,6 @@ app.post('/register', async (req, res) => {
     //Get from payload
     const {usernameInput:user, passwordInput:password} = req.body;
     const username = user.toUpperCase();
-    console.log(username);
     //Password hashing
     //Generate salt for user being created
     const salt = bcrypt.genSaltSync(10)
@@ -84,7 +83,7 @@ app.post('/register', async (req, res) => {
             });
         })
     } catch(err) {
-        res.status(406).send(`"${username}" is already taken. Please select a different username.`)
+        res.status(406).send(`"${user}" is already taken. Please select a different username.`)
     }  
 })
 app.post('/login', async (req, res) => {

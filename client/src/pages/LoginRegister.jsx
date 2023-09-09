@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import TitleHeader from "../components/TitleHeader";
-import UserAlertError from "../components/UserAlertError";
+import DemoUserBtn from "../components/DemoUserBtn";
 import UserAlertWarning from "../components/UserAlertWarning";
 const LoginRegister = () => {
   const [usernameInput, setUsernameInput] = useState("");
@@ -19,23 +19,30 @@ const LoginRegister = () => {
   const loginRegisterHandler = async (e) => {
     e.preventDefault();
     const loginRegisterRoute = loadRegister ? "register" : "login";
-    //Creates Account
-    //Called when registration form is submitted
-    //The api will respond with a cookie containing the token.
     try {
       const { data } = await axios.post(loginRegisterRoute, {
         usernameInput,
         passwordInput,
       });
-      //updates our UserContext
       setUsername(data.username);
       setId(data.id);
     } catch (error) {
-      const errorMsg = error.response.data;
-      setLoginError(errorMsg);
+      setLoginError(error.response.data);
     }
   };
-  //click toggles between registration and login
+  const loginDemo = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("login", {
+        usernameInput: "John Doe",
+        passwordInput: "demo",
+      });
+      setUsername(data.username);
+      setId(data.id);
+    } catch (error) {
+      setLoginError(error.response.data);
+    }
+  };
   const handleClick = (e) => {
     e.preventDefault();
     setLoadRegister(!loadRegister);
@@ -81,6 +88,9 @@ const LoginRegister = () => {
             >
               {loadRegister ? "Log In" : "Create Account"}
             </a>
+          </div>
+          <div onClick={loginDemo}>
+            <DemoUserBtn />
           </div>
         </form>
       </div>

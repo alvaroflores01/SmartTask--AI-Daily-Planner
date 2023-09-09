@@ -20,8 +20,8 @@ const TaskList = ({ title }) => {
   //
   if (taskList !== null && taskList.length > 0) {
     return (
-      <div className="text-white overflow-hidden p-3 flex-grow">
-        <h1 className="text-center underline text-2xl">{title}</h1>
+      <div className="text-white overflow-hidden px-3 flex-grow">
+        <h1 className="text-center underline sm:text-2xl text-xl ">{title}</h1>
         <div className="overflow-scroll h-full">
           {taskList.map((task) => {
             return (

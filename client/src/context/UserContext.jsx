@@ -21,7 +21,6 @@ export function UserContextProvider({ children }) {
   const fetchTasks = async () => {
     if (username) {
       const { data } = await axios.get("/userTasks");
-      // setTaskList(data);
       if (data.length !== taskList.length) {
         setTaskList(data);
       }

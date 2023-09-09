@@ -16,7 +16,6 @@ const Task = ({ task = "default-task", completed, taskId }) => {
       await axios.delete(`/task/${taskId}`);
       fetchTasks();
     } catch (error) {
-      console.log("Could not delete task");
       console.log(error.message);
     }
   };
@@ -24,19 +23,20 @@ const Task = ({ task = "default-task", completed, taskId }) => {
     try {
       await axios.put(`/task/${taskId}`, { completed: !completed });
       fetchTasks();
-      // console.log(`Completed is now ${completed}`);
     } catch (error) {
       console.log(error.message);
     }
   };
   return (
-    <div className="bg-gray-500 p-2 flex justify-between m-4 items-center rounded-lg">
+    <div className="bg-gray-500 sm:p-2 sm:px-1 flex justify-between sm:m-4 m-3 items-center rounded-lg">
       <h1
-        className={completed ? "line-through text-gray-600 block w-full" : ""}
+        className={
+          completed ? "line-through text-gray-600 block w-full ml-3" : "ml-3"
+        }
       >
         {task}
       </h1>
-      <div className="flex gap-2">
+      <div className="flex sm:gap-2 gap-1">
         <button
           onClick={completedHandler}
           className="bg-green-500 p-1 rounded-md"

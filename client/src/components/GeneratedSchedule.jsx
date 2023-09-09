@@ -18,8 +18,8 @@ const GeneratedSchedule = ({ schedule: plannedTasks }) => {
         Today's Plan
       </h1>
       <div className="h-[95%] overflow-auto">
-        {plannedTasks.map((plannedTask) => {
-          return <GeneratedTask data={plannedTask} />;
+        {plannedTasks.map((plannedTask, idx) => {
+          return <GeneratedTask key={idx} data={plannedTask} />;
         })}
       </div>
       <p className=" h-[5%] text-center italic text-gray-600">
