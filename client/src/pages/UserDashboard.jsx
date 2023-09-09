@@ -11,20 +11,14 @@ import axios from "axios";
 import GeneratedSchedule from "../components/GeneratedSchedule";
 
 const UserDashboard = () => {
-  //useContext variables
   const { setUsername, setId, schedule } = useContext(UserContext);
   const logoutHandler = () => {
-    //remove token and send back to main screen
     setUsername(null);
   };
   const { id, username } = useContext(UserContext);
   return (
     <div className="bg-gray-800 lg:h-screen h-full lg:flex items-center sm:border-4 sm:justify-center sm:gap-6">
       <div className="border-4 lg:w-1/3 md:h-[80%] h-screen flex  sm:rounded-xl">
-        {" "}
-        {/*container mx-auto were removed from div*/}
-        {/* <UserMenu /> */}
-        {/* RIGHT COLUMN */}
         <div className="w-full flex  flex-col  rounded-xl">
           <div className="p-8">
             <h1 className="text-3xl text-white">Good Afternoon, {username}.</h1>
@@ -36,9 +30,7 @@ const UserDashboard = () => {
           <div className="md:p-5 p-3">
             <PlannerBtn />
             <AddTaskInput />
-            {/* <LogoutBtn /> */}
           </div>
-
           <LogoutBtn />
         </div>
       </div>

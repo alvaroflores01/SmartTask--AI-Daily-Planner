@@ -2,9 +2,12 @@ import { useState, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import TitleHeader from "../components/TitleHeader";
+import UserAlertError from "../components/UserAlertError";
+import UserAlertWarning from "../components/UserAlertWarning";
 const LoginRegister = () => {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   //loadRegisterView if true load registration, else load sign in
   const [loadRegister, setLoadRegister] = useState(false);
@@ -19,13 +22,18 @@ const LoginRegister = () => {
     //Creates Account
     //Called when registration form is submitted
     //The api will respond with a cookie containing the token.
-    const { data } = await axios.post(loginRegisterRoute, {
-      usernameInput,
-      passwordInput,
-    });
-    //updates our UserContext
-    setUsername(data.username);
-    setId(data.id);
+    try {
+      const { data } = await axios.post(loginRegisterRoute, {
+        usernameInput,
+        passwordInput,
+      });
+      //updates our UserContext
+      setUsername(data.username);
+      setId(data.id);
+    } catch (error) {
+      const errorMsg = error.response.data;
+      setLoginError(errorMsg);
+    }
   };
   //click toggles between registration and login
   const handleClick = (e) => {
@@ -51,6 +59,7 @@ const LoginRegister = () => {
             value={usernameInput}
             onChange={(e) => setUsernameInput(e.target.value)}
             className="block w-full rounded-sm p-2 mb-2 border"
+            required
           />
           <input
             type="password"
@@ -58,10 +67,12 @@ const LoginRegister = () => {
             value={passwordInput}
             onChange={(e) => setPasswordInput(e.target.value)}
             className="block w-full rounded-sm p-2 mb-2 border"
+            required
           />
           <button className="block w-full bg-blue-600 p-2 rounded-sm text-white font-bold hover:text-blue-900 border">
             {loadRegister ? "Create Account" : "Log In"}
           </button>
+          {loginError ? <UserAlertWarning msg={loginError} /> : <></>}
           <div className="text-center mt-2 text-white">
             {loadRegister ? "Already a member? " : "Not a member? "}
             <a

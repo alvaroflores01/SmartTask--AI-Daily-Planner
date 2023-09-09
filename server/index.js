@@ -42,10 +42,7 @@ const verifyToken = (req, res,next) => {
     try {
         const token = req.cookies.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {sameSite: 'none', secure: true});
-        //set info on req.tokenData
         req.tokenData = decoded;
-        // console.log('Token Verfied')
-        // next();
     } catch(error) {
         console.log(`Unauthorized: ${req.tokenData}`)
         //Invalid token
@@ -59,13 +56,14 @@ const verifyToken = (req, res,next) => {
 //ROUTES
 //Route to get Profile info
 app.get('/profile', verifyToken, (req, res) => {
-    // console.log('running GET /profile')
     res.json(req.tokenData);
 })
 //Route to register a new user, and returns token inside a cookie
 app.post('/register', async (req, res) => {
     //Get from payload
-    const {usernameInput:username, passwordInput:password} = req.body;
+    const {usernameInput:user, passwordInput:password} = req.body;
+    const username = user.toUpperCase();
+    console.log(username);
     //Password hashing
     //Generate salt for user being created
     const salt = bcrypt.genSaltSync(10)
@@ -75,6 +73,7 @@ app.post('/register', async (req, res) => {
     /* ONCE USER IS REGISTERED, we want to login: create token and launch UserTask Page */
     //Creates a token that carries userId
     try {
+        // const username = username.toUpperCase();
         const createdUser = await UserModel.create({username, password:hashedPassword});
         jwt.sign({userId: createdUser._id, username}, process.env.JWT_SECRET_KEY, {}, (error, token) => {
             if (error) throw err;
@@ -85,21 +84,17 @@ app.post('/register', async (req, res) => {
             });
         })
     } catch(err) {
-        if (err) {
-            console.log(err.message)
-        };
+        res.status(406).send(`"${username}" is already taken. Please select a different username.`)
     }  
 })
 app.post('/login', async (req, res) => {
-    const {usernameInput:username, passwordInput:password} = req.body;
+    const {usernameInput:user, passwordInput:password} = req.body;
+    const username = user.toUpperCase();
     //search DB for username, and see if it mataches for password
     try {
-        //Find user in db
         const foundUser = await UserModel.findOne({username});
-        if (!foundUser) console.log('usernotfound');
-        //Verify password by comparing the inputPassword w/ hashedpw using stored salt to decode
         const passOk = bcrypt.compareSync(password, foundUser.password);
-        // console.log(` PassOk: ${passOk}`)
+        //Verify password by comparing the inputPassword w/ hashedpw using stored salt to decode
         if (passOk) {
             //Create token to login
             // console.log("Login Success!")
@@ -109,13 +104,13 @@ app.post('/login', async (req, res) => {
                     id: foundUser._id,
                     username,
                 })
-                console.log('cookie sent at login')
+                console.log('Cookie sent to client containing {id: _id, username:')
             })
         } else {
-            console.log('Incorrect Password')
+            res.status(401).send("Incorrect Password or Username")
         }
     } catch(error) {
-        throw error.message;
+        res.status(401).send("User not found");
     }
 })
 app.get('/userTasks',verifyToken, async (req, res) => {
