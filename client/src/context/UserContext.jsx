@@ -21,7 +21,7 @@ export function UserContextProvider({ children }) {
       .catch((e) => {
         console.log(e.message);
       });
-  }, [username]);
+  }, []);
 
   const fetchTasks = async () => {
     if (username) {
