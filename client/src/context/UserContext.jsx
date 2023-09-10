@@ -11,12 +11,12 @@ export function UserContextProvider({ children }) {
   const [id, setId] = useState(null);
   const [taskList, setTaskList] = useState(null);
   const [schedule, setSchedule] = useState(null);
-  useEffect(() => {
-    axios.get("/profile").then((res) => {
-      setId(res.data.userId);
-      fetchTasks();
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("/profile").then((res) => {
+  //     setId(res.data.userId);
+  //     fetchTasks();
+  //   });
+  // }, []);
 
   const fetchTasks = async () => {
     if (username) {
