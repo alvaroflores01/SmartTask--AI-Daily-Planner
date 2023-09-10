@@ -41,6 +41,7 @@ app.use('/task', taskRoutes);
 const verifyToken = (req, res,next) => {
     try {
         const token = req.cookies.token;
+        console.log(token);
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {sameSite: 'none', secure: true});
         req.tokenData = decoded;
         next();
