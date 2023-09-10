@@ -43,6 +43,7 @@ const verifyToken = (req, res,next) => {
         const token = req.cookies.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {sameSite: 'none', secure: true});
         req.tokenData = decoded;
+        next();
     } catch(error) {
         console.log(`Unauthorized: ${req.tokenData}`)
         //Invalid token
@@ -50,13 +51,18 @@ const verifyToken = (req, res,next) => {
             message: 'Unauthorized'
         });
     }
-    next();
+    
 }
 
 //ROUTES
 //Route to get Profile info
 app.get('/profile', verifyToken, (req, res) => {
-    res.json(req.tokenData);
+    try {
+        res.json(req.tokenData);
+    } catch (error) {
+        console.log(`CATCH AT /profile: ${error.message}`)
+    }
+    
 })
 //Route to register a new user, and returns token inside a cookie
 app.post('/register', async (req, res) => {
@@ -118,8 +124,9 @@ app.get('/userTasks',verifyToken, async (req, res) => {
         const tasks = await TaskModel.find({user_id:userId})
         res.json(tasks)
     } catch (error) {
+        console.log(`ERROR: ${error.message}`)
         console.log("/userTasks: ERROR")
-        throw error.message;
+        throw error;
     }
 });
 
