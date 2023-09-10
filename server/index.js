@@ -110,7 +110,7 @@ app.post('/login',  async (req, res) => {
                     id: foundUser._id,
                     username,
                 })
-                console.log('Cookie sent to client containing {id: _id, username:')
+                console.log(`Cookie sent to client containing {id: _id, username:, token:${token}`)
             })
         } else {
             res.status(401).send("Incorrect Password or Username")
