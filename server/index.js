@@ -113,19 +113,20 @@ app.post('/login', async (req, res) => {
     }
 })
 app.get('/userTasks',verifyToken, async (req, res) => {
-    const userId = req.tokenData.userId;
     try {
+        const userId = req.tokenData.userId;
         const tasks = await TaskModel.find({user_id:userId})
         res.json(tasks)
     } catch (error) {
+        console.log("/userTasks: ERROR")
         throw error.message;
     }
 });
 
 app.patch('/planDay', verifyToken, async (req, res) => {
-    const userId = req.tokenData.userId;
-    const taskString = req.body.taskString;
     try {
+        const userId = req.tokenData.userId;
+        const taskString = req.body.taskString;
         const taskList = await askAIPlanner(taskString)
         res.json(taskList).status(204);
     } catch (error) {
