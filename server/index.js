@@ -84,7 +84,7 @@ app.post('/register', async (req, res) => {
         jwt.sign({userId: createdUser._id, username}, process.env.JWT_SECRET_KEY, {}, (error, token) => {
             if (error) throw err;
             //Respond with a cookie containing the token, and sends json containing id and username.
-            res.cookie('token', token, {sameSite: 'none', secure: true}).status(201).json({
+            res.cookie('token', token, {sameSite: 'none', secure: true, expires: new Date.now() + 1 * 3600000}).status(201).json({
                 id: createdUser._id,
                 username,
             });
@@ -106,7 +106,7 @@ app.post('/login',  async (req, res) => {
             // console.log("Login Success!")
             jwt.sign({userId: foundUser._id, username}, process.env.JWT_SECRET_KEY, {}, (error, token) => {
                 if (error) throw error.message;
-                res.cookie('token', token, {sameSite: 'none', secure: true}).status(201).json({
+                res.cookie('token', token, {sameSite: 'none', secure: true, expires: new Date.now() + 1 * 3600000}).status(201).json({
                     id: foundUser._id,
                     username,
                 })
