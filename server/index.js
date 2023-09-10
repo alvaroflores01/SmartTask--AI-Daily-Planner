@@ -65,7 +65,7 @@ app.get('/profile', verifyToken, (req, res) => {
     
 })
 //Route to register a new user, and returns token inside a cookie
-app.post('/register',verifyToken, async (req, res) => {
+app.post('/register', async (req, res) => {
     //Get from payload
     const {usernameInput:user, passwordInput:password} = req.body;
     const username = user.toUpperCase();
@@ -92,7 +92,7 @@ app.post('/register',verifyToken, async (req, res) => {
         res.status(406).send(`"${user}" is already taken. Please select a different username.`)
     }  
 })
-app.post('/login', verifyToken, async (req, res) => {
+app.post('/login',  async (req, res) => {
     const {usernameInput:user, passwordInput:password} = req.body;
     const username = user.toUpperCase();
     //search DB for username, and see if it mataches for password
