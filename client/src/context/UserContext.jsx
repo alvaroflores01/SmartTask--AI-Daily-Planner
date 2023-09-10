@@ -19,7 +19,7 @@ export function UserContextProvider({ children }) {
         fetchTasks();
       })
       .catch((e) => {
-        console.log(`UserContext Catch:${e.message}`);
+        console.log(`UserContext Catch:${e}`);
       });
   }, []);
 
