@@ -12,11 +12,16 @@ export function UserContextProvider({ children }) {
   const [taskList, setTaskList] = useState(null);
   const [schedule, setSchedule] = useState(null);
   useEffect(() => {
-    axios.get("/profile").then((res) => {
-      setId(res.data.userId);
-      fetchTasks();
-    });
-  }, []);
+    axios
+      .get("/profile")
+      .then((res) => {
+        setId(res.data.userId);
+        fetchTasks();
+      })
+      .catch((e) => {
+        console.log(e.message);
+      });
+  }, [username]);
 
   const fetchTasks = async () => {
     if (username) {
