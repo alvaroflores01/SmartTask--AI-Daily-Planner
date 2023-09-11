@@ -21,7 +21,7 @@ export function UserContextProvider({ children }) {
       .catch((e) => {
         console.log(`UserContext Catch:${e}`);
       });
-  });
+  }, []);
 
   const fetchTasks = async () => {
     if (username) {
