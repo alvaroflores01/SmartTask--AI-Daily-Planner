@@ -44,7 +44,7 @@ const verifyToken = (req, res,next) => {
         if(!token) {
             return res.status(401).send("Unauthorized, no token");
         }
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {sameSite: 'none', secure: true});
+        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY, {sameSite: 'none', secure: false});
         req.tokenData = decoded;
         next();
     } catch(error) {
@@ -86,7 +86,7 @@ app.post('/register', async (req, res) => {
         jwt.sign({userId: createdUser._id, username}, process.env.JWT_SECRET_KEY, {}, (error, token) => {
             if (error) throw err;
             //Respond with a cookie containing the token, and sends json containing id and username.
-            res.cookie('token', token, {sameSite: 'none', secure: true}).status(201).json({
+            res.cookie('token', token, {sameSite: 'none', secure: false}).status(201).json({
                 id: createdUser._id,
                 username,
             });
